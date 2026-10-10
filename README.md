@@ -32,20 +32,20 @@ The rubric is in [`ROUTING_RUBRIC.md`](ROUTING_RUBRIC.md). The labeled test set 
 ## Architecture
 
 ```mermaid
-flowchart LR
-    A[Request source<br/>CSV v1 · mailbox or form later] --> B[Extract fields<br/>unknown stays unknown]
-    B --> C[Score fit 0-100<br/>reasons attached]
-    C --> D{Route<br/>rule order in rubric}
-    D -->|Hold| H[Hold<br/>sensitive content · human only]
-    D -->|Spam/invalid| S[Archive]
-    D -->|Duplicate| U[Link to original]
-    D -->|Out of scope| O[Decline draft]
-    D -->|Needs info| N[Question draft]
-    D -->|Qualified| Q[Brief + reply draft]
-    H & S & U & O & N & Q --> R[Human review<br/>approve or correct]
-    R --> L[(Event log<br/>SQLite · every stage timestamped)]
+flowchart TB
+    A[Request source<br/>CSV in v1 · mailbox or form later] --> B[Extract fields<br/>unknown stays unknown]
+    B --> C[Score fit 0–100<br/>with reasons]
+    C --> D{Route · one lane<br/>rule order in the rubric}
+    D --> H[Hold<br/>sensitive content]
+    D --> S[Spam / invalid<br/>archive]
+    D --> U[Duplicate<br/>link to original]
+    D --> O[Out of scope<br/>decline draft]
+    D --> N[Needs info<br/>question draft]
+    D --> Q[Qualified<br/>brief + reply draft]
+    H & S & U & O & N & Q --> R[Human review<br/>approve or correct · corrections logged]
+    R --> L[(Event log · SQLite<br/>every stage timestamped)]
     L --> M[Metrics + SQL<br/>routing accuracy · time to brief · approval rate]
-    R -.manual send only.-> X[Reply goes out]
+    R -. manual send only .-> X[Reply goes out]
 ```
 
 **Design rules carried through the build**
