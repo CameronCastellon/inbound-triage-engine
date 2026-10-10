@@ -1,0 +1,33 @@
+# Secrets never go in the repo. Keys live in environment variables or Colab secrets.
+.env
+.env.*
+*.key
+*.pem
+secrets/
+credentials*.json
+
+# Real or shadow-mode data never goes in the repo. Only fictional fixtures are committed.
+data/real/
+data/shadow/
+*.mbox
+*.eml
+
+# Local databases and run output
+*.sqlite
+*.sqlite3
+*.db
+runs/
+logs/
+
+# Python and notebook noise
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Working notes that must never be public (scope drafts naming a sponsor before permission)
+private/
